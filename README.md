@@ -126,4 +126,4 @@ The exported JSON is designed to be fed directly to an AI coding assistant:
 - ** Will be adding 3 claude skill files to the repository shortly
 
 ## Updates
-- This project will be updated when developers has available to expand functionality, add blocks, validations, definitions
+- This project will be updated to expand functionality, add blocks, validations, definitions
