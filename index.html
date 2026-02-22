@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magento Module Builder - Visual M2 Module Designer</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="lib/flowy.css">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Scripts -->
+    <script src="lib/flowy.js"></script>
+    <script src="js/blocks.js"></script>
+    <script src="js/smart-defaults.js"></script>
+    <script src="js/properties.js"></script>
+    <script src="js/validators.js"></script>
+    <script src="js/exporter.js"></script>
+    <script src="js/main.js"></script>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav id="navbar">
+        <div class="nav-left">
+            <div class="logo">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2" y="2" width="24" height="24" rx="4" fill="currentColor" opacity="0.15"/>
+                    <path d="M7 20L14 8L21 20H7Z" fill="currentColor" opacity="0.6"/>
+                    <path d="M10 20L14 12L18 20H10Z" fill="currentColor"/>
+                </svg>
+            </div>
+            <h1 id="project-title" contenteditable="true" spellcheck="false">My Magento Module</h1>
+        </div>
+        <div class="nav-center">
+            <span class="nav-hint">Design your Magento 2 module visually, then export for AI code generation</span>
+            <button id="validation-badge" class="validation-badge hidden" title="View validation warnings">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                    <path d="M8 1L1 14h14L8 1z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <path d="M8 6v4M8 12h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <span id="validation-count">0</span>
+            </button>
+        </div>
+        <div class="nav-right">
+            <button id="clear-canvas" class="nav-btn secondary" title="Clear canvas">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M2 4h12M5.333 4V2.667a1.333 1.333 0 011.334-1.334h2.666a1.333 1.333 0 011.334 1.334V4m2 0v9.333a1.333 1.333 0 01-1.334 1.334H4.667a1.333 1.333 0 01-1.334-1.334V4h9.334z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Clear
+            </button>
+            <button id="preview-export" class="nav-btn secondary" title="Preview export">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M1.333 8s2.667-5.333 6.667-5.333S14.667 8 14.667 8s-2.667 5.333-6.667 5.333S1.333 8 1.333 8z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="8" cy="8" r="2" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                Preview
+            </button>
+            <button id="copy-json" class="nav-btn secondary" title="Copy JSON to clipboard (Ctrl+Shift+C)">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <rect x="5.333" y="5.333" width="8" height="9.333" rx="1.333" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M3.333 10.667h-.666A1.333 1.333 0 011.333 9.333V2.667a1.333 1.333 0 011.334-1.334h6.666a1.333 1.333 0 011.334 1.334v.666" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                Copy
+            </button>
+            <button id="export-json" class="nav-btn primary" title="Export as JSON (Ctrl+E)">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M14 10v3.333A1.333 1.333 0 0112.667 14.667H3.333A1.333 1.333 0 012 13.333V10M11.333 5.333L8 2 4.667 5.333M8 2v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Export
+            </button>
+        </div>
+    </nav>
+
+    <div id="app">
+        <!-- Left Sidebar -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>Module Components</h2>
+                <button id="toggle-sidebar" class="icon-btn" title="Toggle sidebar">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M10 12l-4-4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="search-box">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <circle cx="7.333" cy="7.333" r="4" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M14 14l-3.333-3.333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <input type="text" id="search-blocks" placeholder="Search components...">
+            </div>
+
+            <div class="sidebar-body">
+                <nav class="side-nav">
+                    <button class="side-nav-item active" data-category="foundation" style="--cat-color: var(--color-foundation)">
+                        <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 2L13 5V11L8 14L3 11V5L8 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                            <path d="M8 2L8 8M13 5L8 8L3 5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                        </svg>
+                        Foundation
+                    </button>
+                    <button class="side-nav-item" data-category="data-layer" style="--cat-color: var(--color-data-layer)">
+                        <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <ellipse cx="8" cy="4.5" rx="4.5" ry="1.8" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M3.5 4.5v3c0 1 2 1.8 4.5 1.8s4.5-.8 4.5-1.8v-3" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M3.5 7.5v3c0 1 2 1.8 4.5 1.8s4.5-.8 4.5-1.8v-3" stroke="currentColor" stroke-width="1.5"/>
+                        </svg>
+                        Data
+                    </button>
+                    <button class="side-nav-item" data-category="controllers" style="--cat-color: var(--color-controllers)">
+                        <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="3" cy="8" r="1.5" stroke="currentColor" stroke-width="1.5"/>
+                            <circle cx="13" cy="4" r="1.5" stroke="currentColor" stroke-width="1.5"/>
+                            <circle cx="13" cy="12" r="1.5" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M4.5 8L9 5M4.5 8L9 11M9 5L11.5 4M9 11L11.5 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                        Routes
+                    </button>
+                    <button class="side-nav-item" data-category="logic" style="--cat-color: var(--color-logic)">
+                        <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.5 2L4 9h5L7.5 14L14 7H9L9.5 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                        </svg>
+                        Logic
+                    </button>
+                    <button class="side-nav-item" data-category="admin" style="--cat-color: var(--color-admin)">
+                        <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 1.5L2 4v4c0 3.3 2.5 5.8 6 6.5 3.5-.7 6-3.2 6-6.5V4L8 1.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                            <path d="M5.5 8l1.8 1.8L10.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Admin
+                    </button>
+                    <button class="side-nav-item" data-category="api-layer" style="--cat-color: var(--color-api-layer)">
+                        <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 2v4M10 2v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            <rect x="4" y="6" width="8" height="4" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M8 10v2M6 12h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                        API
+                    </button>
+                    <button class="side-nav-item" data-category="frontend" style="--cat-color: var(--color-frontend)">
+                        <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="1.5" y="2" width="13" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M5.5 14h5M8 11v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M4 6h3M4 8.5h8M9 6h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                        Frontend
+                    </button>
+                </nav>
+
+                <div id="blocklist" class="block-list">
+                    <!-- Blocks are populated dynamically -->
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <p>Drag blocks to canvas to design your M2 module</p>
+            </div>
+        </aside>
+
+        <!-- Sidebar Reopen Button (visible when sidebar is collapsed) -->
+        <button id="reopen-sidebar" class="reopen-sidebar-btn" title="Show sidebar">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+
+        <!-- Main Canvas -->
+        <main id="canvas-container">
+            <div id="canvas"></div>
+        </main>
+
+        <!-- Right Properties Panel -->
+        <div id="propwrap">
+            <aside id="properties">
+                <div class="prop-header">
+                    <h2>Properties</h2>
+                    <button id="close-properties" class="icon-btn" title="Close panel">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M12 4L4 12M4 4l8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div id="proplist" class="prop-content">
+                    <!-- Properties are populated dynamically -->
+                </div>
+
+                <div class="prop-footer">
+                    <button id="delete-block" class="danger-btn">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M2 4h12M5.333 4V2.667a1.333 1.333 0 011.334-1.334h2.666a1.333 1.333 0 011.334 1.334V4m2 0v9.333a1.333 1.333 0 01-1.334 1.334H4.667a1.333 1.333 0 01-1.334-1.334V4h9.334z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Delete Component
+                    </button>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Export Preview Modal -->
+    <div id="export-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Export Preview</h3>
+                <button id="close-modal" class="icon-btn">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M12 4L4 12M4 4l8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <pre id="export-content"></pre>
+            </div>
+            <div class="modal-footer">
+                <button id="modal-copy" class="nav-btn secondary" onclick="magentoExporter?.copyToClipboard()">Copy to Clipboard</button>
+                <button id="modal-download" class="nav-btn primary" onclick="magentoExporter?.downloadJson()">Download JSON</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Validation Panel -->
+    <div id="validation-modal" class="modal">
+        <div class="modal-content modal-sm">
+            <div class="modal-header">
+                <h3>Validation Warnings</h3>
+                <button id="close-validation" class="icon-btn">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M12 4L4 12M4 4l8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="validation-list"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
