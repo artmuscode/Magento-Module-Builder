@@ -3,12 +3,7 @@
 A visual drag-and-drop tool for designing Magento 2 module architectures. Built on the [Flowy](https://github.com/nicolo-ribaudo/flowy) library, it lets you compose module components on a canvas, configure them via a properties panel, and export an AI-friendly JSON specification for code generation.
 
 ## Quick Start
-
-```bash
-cd magento-module-builder
-python3 -m http.server 8080
-# Open http://localhost:8080
-```
+Project can run from any broswer. Open Index.html
 
 No build step required - pure HTML/CSS/JS.
 
@@ -124,5 +119,11 @@ The exported JSON is designed to be fed directly to an AI coding assistant:
 
 ## Related
 
-- **system-designer** - The generic system architecture builder this project is based on
+- **system-designer** - The generic system architecture builder this project is based on, which is not currently available on github
 - **Magento 2 skill files** (`~/.claude/skills/m2-generate/`) - Reference patterns for M2 module generation
+
+## Claude Skill Files
+- ** Will be adding 3 claude skill files to the repository shortly
+
+## Updates
+- This project will be updated when developers has available to expand functionality, add blocks, validations, definitions
