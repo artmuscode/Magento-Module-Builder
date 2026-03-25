@@ -1,6 +1,6 @@
 # Magento Module Builder
 
-A visual drag-and-drop tool for designing Magento 2 module architectures. Built on the [Flowy](https://github.com/nicolo-ribaudo/flowy) library, it lets you compose module components on a canvas, configure them via a properties panel, and export an AI-friendly JSON specification for code generation.
+A visual drag-and-drop tool for designing Magento 2 module architectures. Built on the [Flowy]((https://github.com/alyssaxuu/flowy)) library, it lets you compose module components on a canvas, configure them via a properties panel, and export an AI-friendly JSON specification for code generation.
 
 ## Quick Start
 Project can run from any broswer. Open Index.html
