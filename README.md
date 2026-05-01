@@ -123,7 +123,7 @@ The exported JSON is designed to be fed directly to an AI coding assistant:
 - **Magento 2 skill files** (`~/.claude/skills/m2-generate/`) - Reference patterns for M2 module generation
 
 ## Claude Skill Files
-- ** Will be adding 3 claude skill files to the repository shortly
+- ** M2 Skill files have been added to .claude folder (4/30/26)
 
 ## Updates
 - This project will be updated to expand functionality, add blocks, validations, definitions
